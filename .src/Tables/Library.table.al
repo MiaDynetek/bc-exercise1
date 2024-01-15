@@ -5,75 +5,137 @@ table 50700 Library
     
     fields
     {
-        field(1; "Book ID"; Integer)
+        field(10; "Book ID"; Integer)
+        {
+            AutoIncrement = true;
+            Caption = '';
+        }
+        field(20; "Title"; Text[50])
+        {
+            Caption = '';
+            NotBlank = true;   
+        }
+        field(30; "Author"; Text[50])
+        {
+            Caption = '';
+            NotBlank = true;   
+        }
+        field(40; "Rented"; Boolean)
         {
             Caption = '';
         }
-        field(2; "Title"; Text[50])
-        {
-            Caption = '';
-        }
-        field(3; "Author"; Text[50])
-        {
-            Caption = '';
-        }
-        field(4; "Rented"; Text[50])
-        {
-            Caption = '';
-        }
-        field(5; "Series"; Text[50])
-        {
-            Caption = '';
-        }
-        field(6; "Genre"; Text[50])
-        {
-            Caption = '';
-        }
-        field(7; "Publisher"; Text[50])
-        {
-            Caption = '';
-        }
-        field(8; "Book Price"; Text[50])
-        {
-            Caption = '';
-        }
-        field(9; "Publication Date"; Date)
-        {
-            Caption = '';
-        }
-        field(10; "Pages"; Integer)
-        {
-            Caption = '';
-        }
-        field(11; "Prequel ID"; Integer)
-        {
-            Caption = '';
-        }
-        field(12; "Sequel ID"; Integer)
-        {
-            Caption = '';
-        }
-        field(13; "Series Name"; Text[50])
-        {
-            Caption = '';
-        }
-        field(14; "Series ID"; Integer)
+         field(120; "Series"; Integer)
         {
             TableRelation = BookSeries."Series ID";
             Caption = '';
+            NotBlank = true;   
+        }
+        field(50; "Genre"; Text[50])
+        {
+            Caption = '';
+            NotBlank = true;   
+        }
+        field(60; "Publisher"; Text[50])
+        {
+            Caption = '';
+            NotBlank = true;   
+        }
+        field(70; "Book Price"; Text[50])
+        {
+            Caption = '';
+            NotBlank = true;   
+        }
+        field(80; "Publication Date"; Date)
+        {
+            Caption = '';
+            NotBlank = true;   
+        }
+        field(90; "Pages"; Integer)
+        {
+            Caption = '';
+            NotBlank = true;   
+        }
+        field(150; "Prequel"; Text[50])
+        {
+            Caption = '';
+            NotBlank = true;   
+        }
+        field(160; "Sequel"; Text[50])
+        {
+            Caption = '';
+            NotBlank = true;   
+        }
+        field(100; "Prequel ID"; Integer)
+        {
+            Caption = '';
+            NotBlank = true;   
+        }
+        field(110; "Sequel ID"; Integer)
+        {
+            Caption = '';
+            NotBlank = true;   
+        }
+       
+        field(140; "Rented Count"; Integer)
+        {
+            Caption = '';
+            NotBlank = true;   
+        }
+       
+        field(170; "Edit Sequel"; Boolean)
+        {
+            Caption = '';
+            NotBlank = true;   
         }
     }
-  
     keys
     {
         key(PK; "Book ID")
         {
             Clustered = true;
         }
-        key(FK; "Series ID")
-        {
-            Unique = true;
-        }
+        // key(FK; "Series ID")
+        // {
+        //     Unique = true;
+        // }
     }
+    procedure AddBookSequel(record: Record Library) : Record Library
+    var
+        newRecord: Record Library;
+        newRentedBook: Page Library;
+    begin
+        newRecord.Init();
+        newRecord.Author := record.Author;
+        newRecord.Series := record.Series;
+        newRecord.Genre := record.Genre;
+        newRecord.Publisher := record.Publisher;
+        newRecord.Publisher := record.Publisher;
+        newRecord.Prequel := record.Title;
+        newRecord."Prequel ID" := record."Book ID";
+        newRecord."Edit Sequel" := true;
+        newRecord.Insert();
+     
+        newRentedBook.SetRecord(newRecord);
+        newRentedBook.Run();
+       
+        exit(newRecord); 
+    end;
+
+    procedure OpenLibraryPage()
+    var
+        Library: Page LibraryBookList;
+    begin
+        Library.Editable(false);
+        Library.Run();
+    end;
+
     
+    // procedure OpenRentingPage(record: Record Library) : Record Library
+    // var
+    //     simpleText: Text[50];
+    // begin
+    //     simpleText := record.Title;
+    //     Message(simpleText);
+        
+    // end;
 }

@@ -8,9 +8,9 @@ table 50705 RentedBooks
         field(1;"Rent ID"; Integer)
         {
             DataClassification = ToBeClassified;
-            
+            AutoIncrement = true;
         }
-        field(2;"Book Status"; Text[50])
+        field(2;"Book Rented"; Boolean)
         {
             DataClassification = ToBeClassified;
             
@@ -18,19 +18,23 @@ table 50705 RentedBooks
         field(3;"Date Rented"; Date)
         {
             DataClassification = ToBeClassified;
+            NotBlank = true;   
             
         }
-        field(4;"Customer ID"; Integer)
+        field(6;"Customer Name"; Text[50])
         {
-            TableRelation = "O365 Customer"."No.";
+            TableRelation = Customer.Name;
             DataClassification = ToBeClassified;
-            
+            NotBlank = true;   
         }
-        field(5;"Book ID"; Integer)
+        field(7;"Book ID"; Integer)
         {
             TableRelation = Library."Book ID";
             DataClassification = ToBeClassified;
-            
+        }
+        field(8;"Book Name"; Text[50])
+        {
+            DataClassification = ToBeClassified;
         }
     }
     
@@ -44,20 +48,46 @@ table 50705 RentedBooks
     
     fieldgroups
     {
-        // Add changes to field groups here
+        // fieldgroup(DropDown;"Book Status")
+        // {
+            
+        // }
     }
-    
+    procedure RentBook(record: Record Library) : Record RentedBooks
+    var
+        
+        simpleText: Text[50];
+        newRecord: Record RentedBooks;
+        newRentedBook: Page RentBook;
+    begin
+        simpleText := record.Title;
+        // Rec."Book Name" := record.Title;
+        newRecord.Init();
+        newRecord."Book Name" := simpleText;
+        newRecord."Book ID" := record."Book ID";
+        newRecord."Date Rented" := System.Today();
+        newRecord.Insert();
+        //RentedBook1 := newRecord;
+        // newRecord.setContext();
+        //Message(simpleText); 
+        newRentedBook.SetRecord(newRecord);
+        newRentedBook.Run();
+        //."Book Name" := simpleText;  
+       // Rec."Rent ID" := xRec."Rent ID";
+        exit(newRecord); 
+    end;
+
     var
         myInt: Integer;
     
     trigger OnInsert()
     begin
-        
+        rentBook2.Run();
     end;
     
     trigger OnModify()
     begin
-        
+        //LibraryBook.Rented := Rec."Book Rented";
     end;
     
     trigger OnDelete()
@@ -69,5 +99,8 @@ table 50705 RentedBooks
     begin
         
     end;
-    
+    var
+        RentedBook1: Record RentedBooks;
+        rentBook2: Page RentBook;
+
 }

@@ -1,21 +1,20 @@
-page 50703 LibraryRoleCentre
+page 50712 LibraryRoleCenter
 {
 
     PageType = RoleCenter;
-    Caption = 'Library Books';
+    Caption = 'Library Role Center';
 
     layout
     {
         area(RoleCenter)
         {
-        //     
-            // group(Group1)
-            // {
-            //     part(part1; "TestActionTile")
-            //     {
-            //         ApplicationArea = All;
-            //     }
-            // }
+            group(Group1)
+            {
+                part(part1; "Open Library")
+                {
+                    ApplicationArea = All;
+                }
+            }
             // part(Headline; "Headline RC Big Boss")
             // {
             // }
@@ -37,8 +36,8 @@ page 50703 LibraryRoleCentre
 
 profile MyProfile
 {
-    ProfileDescription = 'Test Profile';
-    RoleCenter = LibraryRoleCentre;
-    Caption = 'Test Profile';
+    ProfileDescription = 'Library Profile';
+    RoleCenter = LibraryRoleCenter;
+    Caption = 'Library Profile';
 }
 

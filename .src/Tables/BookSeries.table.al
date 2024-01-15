@@ -7,13 +7,14 @@ table 50703 BookSeries
     {
         field(1;"Series ID"; Integer)
         {
+            AutoIncrement = true;
             DataClassification = ToBeClassified;
             
         }
         field(2;"Series Name"; Text[50])
         {
             DataClassification = ToBeClassified;
-            
+            NotBlank = true;   
         }
     }
     
