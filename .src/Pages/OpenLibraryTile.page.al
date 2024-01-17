@@ -10,14 +10,12 @@ page 50711 "Open Library"
         {
             cuegroup(CustomerOverviewListContainer)
             {
-                //Caption = "View Customer Overview List";
                 Caption = 'View Library Books';
                 actions
                 {
                     action("Open Library Book List")
                     {
                         ApplicationArea = All;
-                       // RunObject = page LibraryBookList;
                         
                         Image = TileGreen;
                         

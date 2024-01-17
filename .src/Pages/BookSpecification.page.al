@@ -13,7 +13,7 @@ page 50701 Library
         {
             group("Book Information")
             {
-                field("Title"; "Title")
+                field("Title"; Rec."Title")
                 {
                     ApplicationArea = All;
                     trigger OnValidate()
@@ -26,7 +26,7 @@ page 50701 Library
                         end;
                     end;
                 }
-                field("Author"; "Author")
+                field("Author"; Rec."Author")
                 {
                     ApplicationArea = All;
                     trigger OnValidate()
@@ -39,7 +39,7 @@ page 50701 Library
                         end;
                     end;
                 }
-                field("Rented"; "Rented")
+                field("Status"; Rec."Status")
                 {
                     ApplicationArea = All;
                     
@@ -51,7 +51,7 @@ page 50701 Library
                     ToolTip = 'Specifies the value of the Series Name field.';
                     
                 }
-                field("Genre"; "Genre")
+                field("Genre"; Rec."Genre")
                 {
                     ApplicationArea = All;
                     trigger OnValidate()
@@ -64,7 +64,7 @@ page 50701 Library
                         end;
                     end;
                 }
-                field("Publisher"; "Publisher")
+                field("Publisher"; Rec."Publisher")
                 {
                     ApplicationArea = All;
                     trigger OnValidate()
@@ -77,7 +77,7 @@ page 50701 Library
                         end;
                     end;
                 }
-                field("Book Price"; "Book Price")
+                field("Book Price"; Rec."Book Price")
                 {
                     ApplicationArea = All;
                      trigger OnValidate()
@@ -90,36 +90,36 @@ page 50701 Library
                         end;
                     end;
                 }
-                field("Publication Date"; "Publication Date")
+                field("Publication Date"; Rec."Publication Date")
                 {
                     ApplicationArea = All;
                     
                 }
-                field("Pages"; "Pages")
+                field("Pages"; Rec."Pages")
                 {
                     ApplicationArea = All;
                 }
-                field("Prequel"; "Prequel")
-                {
-                    ApplicationArea = All;
-                    Editable = false;
-                }
-                 field("Sequel"; "Sequel")
+                field("Prequel"; Rec."Prequel")
                 {
                     ApplicationArea = All;
                     Editable = false;
                 }
-                field("Edit Sequel"; "Edit Sequel")
+                 field("Sequel"; Rec."Sequel")
+                {
+                    ApplicationArea = All;
+                    Editable = false;
+                }
+                field("Edit Sequel"; Rec."Edit Sequel")
                 {
                     ApplicationArea = All;
                     Visible = false;
                 }
-                field("Prequel ID"; "Prequel ID")
+                field("Prequel ID"; Rec."Prequel ID")
                 {
                     ApplicationArea = All;
                     Visible = false;
                 }
-                field("Sequel ID"; "Sequel ID")
+                field("Sequel ID"; Rec."Sequel ID")
                 {
                     ApplicationArea = All;
                     Visible = false;
@@ -128,40 +128,19 @@ page 50701 Library
             }
         }
     }
-
+   
     trigger OnModifyRecord(): Boolean
     var
         currentBook: Integer;
         libraryBooks: Record Library;
     begin
-        if("Edit Sequel" = true) then
+        if(Rec."Edit Sequel" = true) then
         begin
         libraryBooks.SetFilter("Book ID", '=%1', Rec."Prequel ID");
         libraryBooks.FindFirst();
-        // Message(libraryBooks.Title);
         libraryBooks.Sequel := Rec.Title;
         libraryBooks."Sequel ID" := Rec."Book ID";
         libraryBooks.Modify();
         end;
-        //Message('Works');
     end;
-
-    // actions
-    // {
-    //     area(Processing)
-    //     {
-    //         action(ActionName)
-    //         {
-    //             ApplicationArea = All;
-                
-    //             trigger OnAction()
-    //             begin
-                    
-    //             end;
-    //         }
-    //     }
-    // }
-    
-    var
-        myInt: Integer;
 }

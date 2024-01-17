@@ -57,7 +57,6 @@ page 50707 RentBook
         libraryBooks.Rented := Rec."Book Rented";
         libraryBooks."Rented Count" := libraryBooks."Rented Count" + 1;
         libraryBooks.Modify();
-        //Message('Works');
     end;
     // actions
     // {

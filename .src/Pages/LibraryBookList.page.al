@@ -17,7 +17,11 @@ page 50705 LibraryBookList
                 field(Title; Rec.Title)
                 {
                     ToolTip = 'Specifies the value of the Title field.';
-                }   
+                } 
+                field(Status; Rec.Status)
+                {
+                    ToolTip = 'Specifies the value of the Status field.';
+                }  
                 field(Author; Rec.Author)
                 {
                     ToolTip = 'Specifies the value of the Author field.';
@@ -34,10 +38,10 @@ page 50705 LibraryBookList
                 {
                     ToolTip = 'Specifies the value of the Publisher field.';
                 }
-                field(Rented; Rec.Rented)
-                {
-                    ToolTip = 'Specifies the value of the Rented field.';
-                }
+                // field(Rented; Rec.Rented)
+                // {
+                //     ToolTip = 'Specifies the value of the Rented field.';
+                // }
                 field("Series Name"; Rec."Series")
                 {
                     Lookup = true;
@@ -123,4 +127,11 @@ page 50705 LibraryBookList
             }
         }
     }
+    
+    trigger OnOpenPage()
+    var
+        myInt: Integer;
+    begin
+        
+    end;
 }

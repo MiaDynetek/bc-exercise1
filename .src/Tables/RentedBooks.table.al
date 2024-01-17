@@ -5,34 +5,38 @@ table 50705 RentedBooks
     
     fields
     {
-        field(1;"Rent ID"; Integer)
+        field(210;"Rent ID"; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
         }
-        field(2;"Book Rented"; Boolean)
+        field(220;"Book Rented"; Boolean)
         {
             DataClassification = ToBeClassified;
             
         }
-        field(3;"Date Rented"; Date)
+        field(230;"Date Rented"; Date)
         {
             DataClassification = ToBeClassified;
             NotBlank = true;   
             
         }
-        field(6;"Customer Name"; Text[50])
+        field(240;"Customer Name"; Text[50])
         {
-            TableRelation = Customer.Name;
+            TableRelation = Customer;
             DataClassification = ToBeClassified;
             NotBlank = true;   
         }
-        field(7;"Book ID"; Integer)
+        field(250;"Book ID"; Integer)
         {
             TableRelation = Library."Book ID";
             DataClassification = ToBeClassified;
         }
-        field(8;"Book Name"; Text[50])
+        field(260;"Book Name"; Text[50])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(90;"Status"; Text[50])
         {
             DataClassification = ToBeClassified;
         }
@@ -44,6 +48,10 @@ table 50705 RentedBooks
         {
             Clustered = true;
         }
+    //     key(FK; "Customer Name", "Book ID")
+    //     {
+    //        Unique = true; 
+    //     }
     }
     
     fieldgroups
@@ -66,6 +74,7 @@ table 50705 RentedBooks
         newRecord."Book Name" := simpleText;
         newRecord."Book ID" := record."Book ID";
         newRecord."Date Rented" := System.Today();
+        newRecord."Book Rented" := record.Rented;
         newRecord.Insert();
         //RentedBook1 := newRecord;
         // newRecord.setContext();

@@ -24,6 +24,7 @@ table 50703 BookSeries
         {
             Clustered = true;
         }
+       
     }
     
     fieldgroups

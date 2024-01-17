@@ -23,6 +23,7 @@ table 50700 Library
         field(40; "Rented"; Boolean)
         {
             Caption = '';
+            ObsoleteState = Pending;
         }
          field(120; "Series"; Integer)
         {
@@ -87,6 +88,12 @@ table 50700 Library
             Caption = '';
             NotBlank = true;   
         }
+
+        field(180; "Status"; Enum Status)
+        {
+            Caption = '';
+            NotBlank = true;   
+        }
     }
     keys
     {
@@ -94,9 +101,9 @@ table 50700 Library
         {
             Clustered = true;
         }
-        // key(FK; "Series ID")
+        // key(FK; "Series")
         // {
-        //     Unique = true;
+        //    Unique = true; 
         // }
     }
     procedure AddBookSequel(record: Record Library) : Record Library
