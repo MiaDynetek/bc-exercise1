@@ -36,10 +36,10 @@ table 50705 RentedBooks
         {
             DataClassification = ToBeClassified;
         }
-        field(90;"Status"; Text[50])
-        {
-            DataClassification = ToBeClassified;
-        }
+        // field(90;"Status"; Text[50])
+        // {
+        //     DataClassification = ToBeClassified;
+        // }
     }
     
     keys
@@ -61,31 +61,16 @@ table 50705 RentedBooks
             
         // }
     }
-    procedure RentBook(record: Record Library) : Record RentedBooks
+    procedure UpdateRentedBook()
     var
-        
-        simpleText: Text[50];
-        newRecord: Record RentedBooks;
-        newRentedBook: Page RentBook;
+        libraryBooks: Record Library;
     begin
-        simpleText := record.Title;
-        // Rec."Book Name" := record.Title;
-        newRecord.Init();
-        newRecord."Book Name" := simpleText;
-        newRecord."Book ID" := record."Book ID";
-        newRecord."Date Rented" := System.Today();
-        newRecord."Book Rented" := record.Rented;
-        newRecord.Insert();
-        //RentedBook1 := newRecord;
-        // newRecord.setContext();
-        //Message(simpleText); 
-        newRentedBook.SetRecord(newRecord);
-        newRentedBook.Run();
-        //."Book Name" := simpleText;  
-       // Rec."Rent ID" := xRec."Rent ID";
-        exit(newRecord); 
+        libraryBooks.SetFilter("Book ID", '=%1', Rec."Book ID");
+        libraryBooks.FindFirst();
+        libraryBooks.Rented := Rec."Book Rented";
+        libraryBooks."Rented Count" := libraryBooks."Rented Count" + 1;
+        libraryBooks.Modify();
     end;
-
     var
         myInt: Integer;
     

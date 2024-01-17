@@ -18,9 +18,9 @@ page 50705 LibraryBookList
                 {
                     ToolTip = 'Specifies the value of the Title field.';
                 } 
-                field(Status; Rec.Status)
+                field(Rented; Rec.Rented)
                 {
-                    ToolTip = 'Specifies the value of the Status field.';
+                    ToolTip = 'Specifies the value of the Rented field.';
                 }  
                 field(Author; Rec.Author)
                 {
@@ -85,11 +85,10 @@ page 50705 LibraryBookList
                 Image = Import;
                 trigger OnAction()
                 var
-                    rentBook: Record RentedBooks;
-                    rentBook1: Page RentBook;
+                    // rentBook: Record RentedBooks;
+                    // rentBook1: Page RentBook;
                 begin
-                    rentBook.RentBook(Rec);
-                    
+                    Rec.RentBook();
                 end;
             }
             action("Display Books Published Within The Last 2 Years")
@@ -101,14 +100,15 @@ page 50705 LibraryBookList
 
                 trigger OnAction()
                 var
-                    Today: Date;
-                    TwoYearsAgo: Date;
-                    NewField: Text[50];
-                    Library: Record Library;
+                    // Today: Date;
+                    // TwoYearsAgo: Date;
+                    // NewField: Text[50];
+                    // Library: Record Library;
                 begin
-                    Today := WorkDate();
-                    TwoYearsAgo := Today - 730;
-                    Rec.SetFilter("Publication Date", '>%1',TwoYearsAgo);
+                    Rec.LastTwoYearsFilter();
+                    // Today := WorkDate();
+                    // TwoYearsAgo := Today - 730;
+                    // Rec.SetFilter("Publication Date", '>%1',TwoYearsAgo);
                 end;
             }
            
@@ -119,19 +119,10 @@ page 50705 LibraryBookList
                 ApplicationArea = All;
                 Image = Import;
                 trigger OnAction()
-                var
-                    rentBook: Record Library;
                 begin
-                    rentBook.AddBookSequel(Rec); 
+                    Rec.AddBookSequel(); 
                 end;
             }
         }
     }
-    
-    trigger OnOpenPage()
-    var
-        myInt: Integer;
-    begin
-        
-    end;
 }

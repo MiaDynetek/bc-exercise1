@@ -22,7 +22,7 @@ page 50701 Library
                     begin
                         if Rec."Title" = '' then
                         begin
-                            Message('Please enter the book title.'); 
+                            Message('Please enter the book title.');
                         end;
                     end;
                 }
@@ -39,7 +39,7 @@ page 50701 Library
                         end;
                     end;
                 }
-                field("Status"; Rec."Status")
+                field("Rented"; Rec."Rented")
                 {
                     ApplicationArea = All;
                     
@@ -130,17 +130,15 @@ page 50701 Library
     }
    
     trigger OnModifyRecord(): Boolean
-    var
-        currentBook: Integer;
-        libraryBooks: Record Library;
     begin
-        if(Rec."Edit Sequel" = true) then
-        begin
-        libraryBooks.SetFilter("Book ID", '=%1', Rec."Prequel ID");
-        libraryBooks.FindFirst();
-        libraryBooks.Sequel := Rec.Title;
-        libraryBooks."Sequel ID" := Rec."Book ID";
-        libraryBooks.Modify();
-        end;
+        Rec.UpdatePrequelSequel();
+        // if(Rec."Edit Sequel" = true) then
+        // begin
+        // libraryBooks.SetFilter("Book ID", '=%1', Rec."Prequel ID");
+        // libraryBooks.FindFirst();
+        // libraryBooks.Sequel := Rec.Title;
+        // libraryBooks."Sequel ID" := Rec."Book ID";
+        // libraryBooks.Modify();
+        // end;
     end;
 }

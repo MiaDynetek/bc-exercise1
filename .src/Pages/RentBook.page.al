@@ -47,16 +47,15 @@ page 50707 RentBook
     }
     trigger OnModifyRecord(): Boolean
     var
-        currentBook: Integer;
-        libraryBooks: Record Library;
+        // currentBook: Integer;
+        // libraryBooks: Record Library;
     begin
-        //Message(Rec."Book Name");
-        libraryBooks.SetFilter("Book ID", '=%1', Rec."Book ID");
-        libraryBooks.FindFirst();
-        // Message(libraryBooks.Title);
-        libraryBooks.Rented := Rec."Book Rented";
-        libraryBooks."Rented Count" := libraryBooks."Rented Count" + 1;
-        libraryBooks.Modify();
+        // libraryBooks.SetFilter("Book ID", '=%1', Rec."Book ID");
+        // libraryBooks.FindFirst();
+        // libraryBooks.Rented := Rec."Book Rented";
+        // libraryBooks."Rented Count" := libraryBooks."Rented Count" + 1;
+        // libraryBooks.Modify();
+        Rec.UpdateRentedBook()
     end;
     // actions
     // {

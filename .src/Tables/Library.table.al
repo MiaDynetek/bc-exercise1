@@ -23,7 +23,7 @@ table 50700 Library
         field(40; "Rented"; Boolean)
         {
             Caption = '';
-            ObsoleteState = Pending;
+            // ObsoleteState = Pending;
         }
          field(120; "Series"; Integer)
         {
@@ -89,11 +89,11 @@ table 50700 Library
             NotBlank = true;   
         }
 
-        field(180; "Status"; Enum Status)
-        {
-            Caption = '';
-            NotBlank = true;   
-        }
+        // field(180; "Status"; Enum Status)
+        // {
+        //     Caption = '';
+        //     NotBlank = true;   
+        // }
     }
     keys
     {
@@ -106,26 +106,24 @@ table 50700 Library
         //    Unique = true; 
         // }
     }
-    procedure AddBookSequel(record: Record Library) : Record Library
+    procedure AddBookSequel()
     var
         newRecord: Record Library;
         newRentedBook: Page Library;
     begin
         newRecord.Init();
-        newRecord.Author := record.Author;
-        newRecord.Series := record.Series;
-        newRecord.Genre := record.Genre;
-        newRecord.Publisher := record.Publisher;
-        newRecord.Publisher := record.Publisher;
-        newRecord.Prequel := record.Title;
-        newRecord."Prequel ID" := record."Book ID";
+        newRecord.Author := Rec.Author;
+        newRecord.Series := Rec.Series;
+        newRecord.Genre := Rec.Genre;
+        newRecord.Publisher := Rec.Publisher;
+        newRecord.Publisher := Rec.Publisher;
+        newRecord.Prequel := Rec.Title;
+        newRecord."Prequel ID" := Rec."Book ID";
         newRecord."Edit Sequel" := true;
         newRecord.Insert();
      
         newRentedBook.SetRecord(newRecord);
         newRentedBook.Run();
-       
-        exit(newRecord); 
     end;
 
     procedure OpenLibraryPage()
@@ -136,6 +134,55 @@ table 50700 Library
         Library.Run();
     end;
 
+    procedure UpdatePrequelSequel()
+    var
+        libraryBooks: Record Library;
+    begin
+       if(Rec."Edit Sequel" = true) then
+        begin
+        libraryBooks.SetFilter("Book ID", '=%1', Rec."Prequel ID");
+        libraryBooks.FindFirst();
+        libraryBooks.Sequel := Rec.Title;
+        libraryBooks."Sequel ID" := Rec."Book ID";
+        libraryBooks.Modify();
+        end;
+    end;
+    procedure LastTwoYearsFilter()
+    var
+        Today: Date;
+        TwoYearsAgo: Date;
+        NewField: Text[50];
+        Library: Record Library;
+    begin
+        Today := WorkDate();
+        TwoYearsAgo := Today - 730;
+        Rec.SetFilter("Publication Date", '>%1',TwoYearsAgo);
+    end;
+    
+    procedure RentBook() : Record RentedBooks
+    var
+        
+        simpleText: Text[50];
+        newRecord: Record RentedBooks;
+        newRentedBook: Page RentBook;
+    begin
+        simpleText := Rec.Title;
+        // Rec."Book Name" := record.Title;
+        newRecord.Init();
+        newRecord."Book Name" := simpleText;
+        newRecord."Book ID" := Rec."Book ID";
+        newRecord."Date Rented" := System.Today();
+        newRecord."Book Rented" := Rec.Rented;
+        newRecord.Insert();
+        //RentedBook1 := newRecord;
+        // newRecord.setContext();
+        //Message(simpleText); 
+        newRentedBook.SetRecord(newRecord);
+        newRentedBook.Run();
+        //."Book Name" := simpleText;  
+       // Rec."Rent ID" := xRec."Rent ID";
+        exit(newRecord); 
+    end;
     
     // procedure OpenRentingPage(record: Record Library) : Record Library
     // var
